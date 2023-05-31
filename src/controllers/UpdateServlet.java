@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Task;
+import models.validators.MessageValidator;
 import utils.DBUtil;
-import validators.MessageValidator;
 
 /**
  * Servlet implementation class UpdateServlet
@@ -77,17 +77,6 @@ public class UpdateServlet extends HttpServlet {
                 // indexページへリダイレクト
                 response.sendRedirect(request.getContextPath() + "/index");
             }
-            // データベースを更新
-            em.getTransaction().begin();
-            em.getTransaction().commit();
-            request.getSession().setAttribute("flush", "更新が完了しました。");       // ここを追記
-            em.close();
-
-            // セッションスコープ上の不要になったデータを削除
-            request.getSession().removeAttribute("task_id");
-
-            // indexページへリダイレクト
-            response.sendRedirect(request.getContextPath() + "/index");
         }
     }
 }
